@@ -1,5 +1,4 @@
 const createStorage = (typeVal, htmlString) => {
-    const oldData = [];
     const checkLocalStorage = () => {
         if (localStorage.getItem("invoice") === null) {
             localStorage.setItem("invoice", "[]");
@@ -8,13 +7,13 @@ const createStorage = (typeVal, htmlString) => {
             localStorage.setItem("estimate", "[]");
         }
     };
-    const setItem = (type, htmlStr) => {
+    const setItem = (typeVal, htmlString) => {
         let array;
-        array = localStorage.getItem(type);
+        array = localStorage.getItem(typeVal);
         if (array !== null) {
-            const data = JSON.parse(array);
-            data.push(htmlStr);
-            localStorage.setItem(type, JSON.stringify(data));
+            const oldData = JSON.parse(array);
+            oldData.push(htmlString);
+            localStorage.setItem(typeVal, JSON.stringify(oldData));
         }
         else {
             document.location.reload();
@@ -25,7 +24,6 @@ const createStorage = (typeVal, htmlString) => {
     setItem(typeVal, htmlString);
     return { setItem };
 };
-// Exportez également checkLocalStorage séparément pour une utilisation externe
 export const checkLocalStorage = () => {
     if (localStorage.getItem("invoice") === null) {
         localStorage.setItem("invoice", "[]");

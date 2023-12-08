@@ -1,10 +1,10 @@
-// import { Storage } from "../classes/Storage.js";
+import createStorage from "../factories/createStorage.js";
 const createDisplay = (container, hiddenDiv, btnPrint) => {
     const formContainer = document.getElementById("form-container");
     const render = (docObj, docType) => {
         const htmlString = docObj.htmlFormat();
         container.innerHTML = htmlString;
-        // new Storage(docType, htmlString);
+        createStorage(docType, htmlString);
         if (docType === "invoice") {
             btnPrint.innerText = "Imprimer la facture";
         }

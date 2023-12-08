@@ -1,8 +1,7 @@
 import { HasSetItem } from "../interfaces/HasSetItem.js";
 
 const createStorage = (typeVal: string, htmlString: string): HasSetItem => {
-  const oldData: string[] = [];
-
+  
   const checkLocalStorage = (): void => {
     if (localStorage.getItem("invoice") === null) {
       localStorage.setItem("invoice", "[]");
@@ -12,13 +11,13 @@ const createStorage = (typeVal: string, htmlString: string): HasSetItem => {
     }
   };
 
-  const setItem = (type: string, htmlStr: string): void => {
+  const setItem = (typeVal: string, htmlString: string): void => {
     let array: string | null;
-    array = localStorage.getItem(type);
+    array = localStorage.getItem(typeVal);
     if (array !== null) {
-      const data = JSON.parse(array);
-      data.push(htmlStr);
-      localStorage.setItem(type, JSON.stringify(data));
+      const oldData = JSON.parse(array);
+      oldData.push(htmlString);
+      localStorage.setItem(typeVal, JSON.stringify(oldData));
     } else {
       document.location.reload();
     }
@@ -31,7 +30,6 @@ const createStorage = (typeVal: string, htmlString: string): HasSetItem => {
   return { setItem };
 };
 
-// Exportez également checkLocalStorage séparément pour une utilisation externe
 export const checkLocalStorage = (): void => {
   if (localStorage.getItem("invoice") === null) {
     localStorage.setItem("invoice", "[]");

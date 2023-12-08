@@ -1,6 +1,6 @@
 import { HasHTMLFormat } from "../interfaces/HasHTMLFormat.js";
 import { HasRender } from "../interfaces/HasRender.js";
-// import { Storage } from "../classes/Storage.js";
+import createStorage from "../factories/createStorage.js";
 
 const createDisplay = (
     container: HTMLDivElement,
@@ -13,7 +13,7 @@ const createDisplay = (
         const htmlString: string = docObj.htmlFormat();
         container.innerHTML = htmlString;
 
-        // new Storage(docType, htmlString);
+        createStorage(docType, htmlString);
 
         if (docType === "invoice") {
             btnPrint.innerText = "Imprimer la facture";
