@@ -22,6 +22,7 @@ const createDisplay = (
         }
 
         hiddenDiv.classList.remove("invisible");
+        // formContainer.classList.add("invisible"); 
         formContainer.innerHTML = "";
     };
 

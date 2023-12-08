@@ -2,7 +2,6 @@ import createDatas from "./createDatas.js";
 import createDisplay from "./createDisplay.js";
 import createPrint from "./createPrint.js";
 const createFormInput = () => {
-    // Sélection des éléments du formulaire
     const form = document.getElementById("form");
     const type = document.getElementById("type");
     const firstName = document.getElementById("firstName");
@@ -17,9 +16,11 @@ const createFormInput = () => {
     const tva = document.getElementById("tva");
     const docContainer = document.getElementById("document-container");
     const hiddenDiv = document.getElementById("hiddenDiv");
+    const storedEl = document.getElementById("stored-data");
     const btnPrint = document.getElementById("print");
     const btnReload = document.getElementById("reload");
-    // Fonction pour récupérer et valider les données du formulaire
+    const btnStoredInvoices = document.getElementById("stored-invoices");
+    const btnStoredEstimates = document.getElementById("stored-estimates");
     const inputDatas = () => {
         const typeValue = type.value;
         const firstNameValue = firstName.value;
@@ -64,7 +65,33 @@ const createFormInput = () => {
             window.scrollTo(0, 0);
         });
     };
-    // Gestionnaire d'événements pour la soumission du formulaire
+    const getStoredDocListeners = () => {
+        btnStoredInvoices.addEventListener("click", () => getItems("invoice"));
+        btnStoredEstimates.addEventListener("click", () => getItems("estimate"));
+    };
+    const getItems = (docType) => {
+        if (storedEl.hasChildNodes()) {
+            storedEl.innerHTML = "";
+        }
+        const array = localStorage.getItem(docType);
+        if (array) {
+            const arrayData = JSON.parse(array);
+            if (arrayData.length > 0) {
+                arrayData.forEach((doc) => {
+                    const card = document.createElement("div");
+                    const cardBody = document.createElement("div");
+                    card.classList.add("card", "mt-5");
+                    cardBody.classList.add("card-body");
+                    cardBody.innerHTML = doc;
+                    card.appendChild(cardBody);
+                    storedEl.appendChild(card);
+                });
+            }
+            else {
+                storedEl.innerHTML = "<div class='p-5'>Aucune data disponible !</div>";
+            }
+        }
+    };
     const handleFormSubmit = (e) => {
         e.preventDefault();
         const inputs = inputDatas();
@@ -75,11 +102,11 @@ const createFormInput = () => {
             template.render(docData, typeValue);
         }
     };
-    // Attachement de l'événement 'submit' au formulaire
+    // Listeners
     form.addEventListener("submit", handleFormSubmit);
     printListener(document.getElementById("print"), document.getElementById("document-container"));
     deleteListener(btnReload);
-    // Retourne les éléments du formulaire pour une utilisation éventuelle
+    getStoredDocListeners();
     return {
         form,
         type,

@@ -12,6 +12,7 @@ const createDisplay = (container, hiddenDiv, btnPrint) => {
             btnPrint.innerText = "Imprimer le devis";
         }
         hiddenDiv.classList.remove("invisible");
+        // formContainer.classList.add("invisible"); 
         formContainer.innerHTML = "";
     };
     return { render };
