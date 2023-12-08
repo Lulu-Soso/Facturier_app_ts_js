@@ -1,4 +1,6 @@
-import FormInput from "./factories/createFormInputs.js";
+import createFormInput from "./factories/createFormInputs.js";
+import { checkLocalStorage } from "./factories/createStorage.js";
 
 // Exécutez directement la fonction FormInput pour initialiser et configurer votre formulaire
-FormInput();
+createFormInput();
+checkLocalStorage()
